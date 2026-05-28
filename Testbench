@@ -1,0 +1,21 @@
+module tb;
+  reg clk,reset;
+  reg [3:0] load;
+  wire [3:0] q;
+  johnson uut(clk,reset,load,q);
+  always #5 clk=~clk;
+  initial
+    begin
+      $dumpfile("dump.vcd");
+      $dumpvars(0,tb); 
+      $monitor("Time = %0t || Q = %b",$time,q);
+      
+      clk=0;
+      reset=1;
+      load = 4'b0000; //The number which is loaded in the counter
+      
+      #10 reset=0;
+      
+      #100 $finish;
+    end
+endmodule
